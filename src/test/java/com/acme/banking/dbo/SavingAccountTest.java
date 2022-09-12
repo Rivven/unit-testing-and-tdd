@@ -1,41 +1,68 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class SavingAccountTest {
 
+    @Mock
+    private Account accountDoubler;
+
     @Test
     public void shouldCreateSavingAccountWhenValidInput() {
-        //given
+        //region given
         int clientId = 1;
-        String clientName = "dummy name";
-        Client client = new Client(clientId, clientName);
-        int savingAccountId = 2;
-        double amount = 100.0;
+        String clientName = "clientName";
+        int accountId = 10;
+        double accountAmount = 10.0;
+        Client client = new Client(clientId, clientName, accountDoubler);
+        //endregion
 
-        //when
-        SavingAccount savingAccount = new SavingAccount(savingAccountId, client, amount);
+        //region when
+        SavingAccount account = new SavingAccount(accountId, client, accountAmount);
+        //endregion
 
-        //then
-        Assertions.assertFalse(savingAccount == null);
+        //region then
+        assertNotNull(account);
+        //endregion
     }
 
     @Test
-    public void shourNotCreateSavingAccountWhenNotValidInput() {
-        //given
+    public void shouldNotCreateSavingAccountWhenInvalidAmount() {
+        //region given
         int clientId = 1;
-        String clientName = "dummy name";
-        Client client = new Client(clientId, clientName);
-        int savingAccountId = 2;
-        double amount = 100.0;
+        String clientName = "clientName";
+        int accountId = 10;
+        double accountAmount = -0.1;
+        Client client = new Client(clientId, clientName, accountDoubler);
+        //endregion
+        SavingAccount account;
+        //region when
+        try {
+            account = new SavingAccount(accountId, client, accountAmount);
+        } catch (IllegalArgumentException e) {
+        }
+        //endregion
 
-        //when
-        SavingAccount savingAccount = new SavingAccount(savingAccountId, client, amount);
+        //region then
 
-        //then
-        Assertions.assertFalse(savingAccount == null);
+//        assertNotNull(account);
+        //endregion
     }
 }
+//region given
+//endregion
+
+//region when
+//endregion
+
+//region then
+//endregion
