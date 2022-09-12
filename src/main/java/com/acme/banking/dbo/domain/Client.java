@@ -8,7 +8,7 @@ public class Client {
     private String name; // not empty && not null
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
-    public Client(int id, String name) {
+    public Client(int id, String name, Account accountDoubler) {
         if (id <= 0) throw new IllegalArgumentException("Id должен быть больше 0");
         if (name == null || name.isEmpty()) throw new IllegalArgumentException("name не должен быть null лии пустым");
 
@@ -22,5 +22,18 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public Collection<Account> getAccounts() {
+        return accounts;
+    }
+
+    public double getAccountsSum() {
+        double sum = 0;
+        for (Account account: accounts) {
+            sum += account.getAmount();
+        }
+
+        return sum;
     }
 }
