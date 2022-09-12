@@ -22,7 +22,7 @@ public class Processing {
     }
 
     public Client createClient(String name) {
-        return null; //TODO
+        return null; //clientRepository.create();
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {

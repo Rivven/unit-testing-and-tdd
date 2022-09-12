@@ -52,35 +52,30 @@ public class ProcessingTest {
 
     @Test
     public void shoudSaveCorrectAccountsWhenTransfer(){
-        Account from = mock(Account.class);
         Account to = mock(Account.class);
 
-        when(accountRepositoryDoubler.findById(1)).thenReturn(from);
+        when(accountRepositoryDoubler.findById(1)).thenReturn(accountDoubler);
         when(accountRepositoryDoubler.findById(2)).thenReturn(to);
 
         sut.transfer(1,2,amountDoubler);
 
-        verify(accountRepositoryDoubler).save(from);
+        verify(accountRepositoryDoubler).save(accountDoubler);
     }
 
     @Test
     public void shoudCashLogWhenWithdraw(){
-        Account from = mock(Account.class);
-        when(accountRepositoryDoubler.findById(1)).thenReturn(from);
+        when(accountRepositoryDoubler.findById(1)).thenReturn(accountDoubler);
 
         sut.cash(amountDoubler, 1);
 
-        verify(accountRepositoryDoubler).save(from);
+        verify(accountRepositoryDoubler).save(accountDoubler);
     }
 
     @Test
     public void errorWhenWithdrawWithNotExistAccount(){
-        Account notExistAccount = null;
-
-        when(accountRepositoryDoubler.findById(2)).thenReturn(notExistAccount);
+        when(accountRepositoryDoubler.findById(2)).thenReturn(null);
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> sut.cash(amountDoubler, 2));
-
-        verify(accountRepositoryDoubler, times(0)).save(notExistAccount);
+        verify(accountRepositoryDoubler, times(0)).save(null);
     }
 }
